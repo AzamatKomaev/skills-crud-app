@@ -2,59 +2,25 @@ package com.azamat_komaev.crudapp.repository.gson;
 
 import com.azamat_komaev.crudapp.model.Skill;
 import com.azamat_komaev.crudapp.repository.SkillRepository;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.azamat_komaev.crudapp.utils.FileHandler;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 public class GsonSkillRepositoryImpl implements SkillRepository {
-    private final String SKILL_FILE_PATH = "src/main/resources/skills.json";
-    private final Gson GSON = new Gson();
+    private final FileHandler<Skill> handler;
 
-    private List<Skill> readSkillsFromFile() {
-        String fileContent;
-        List<Skill> skillList;
-        List<Skill> defaultList = new ArrayList<>(Collections.emptyList());
-
-        try {
-            fileContent = new String(Files.readAllBytes(Paths.get(SKILL_FILE_PATH)));
-            Type type = new TypeToken<ArrayList<Skill>>(){}.getType();
-            skillList = GSON.fromJson(fileContent, type);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-
-        System.out.println(skillList == null ? defaultList : skillList);
-        return skillList == null ? defaultList : skillList;
-    }
-
-    private void writeSkillsToFile(List<Skill> skills) {
-        String json = GSON.toJson(skills);
-        try {
-            Files.write(Paths.get(SKILL_FILE_PATH), json.getBytes());
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+    public GsonSkillRepositoryImpl() {
+        this.handler = new FileHandler<Skill>("src/main/resources/skills.json");
     }
 
     private Integer generateNewId(List<Skill> skills) {
-        if (skills == null) {
-            return 1;
-        }
-
         Skill maxIdSkill = skills.stream().max(Comparator.comparing(Skill::getId)).orElse(null);
         return Objects.nonNull(maxIdSkill) ? maxIdSkill.getId() + 1 : 1;
-
     }
 
     @Override
     public Skill getById(Integer id) {
-        return readSkillsFromFile().stream()
+        return this.handler.read(Skill.class).stream()
             .filter(s -> s.getId().equals(id))
             .findFirst()
             .orElse(null);
@@ -62,17 +28,17 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public List<Skill> getAll() {
-        return readSkillsFromFile();
+        return this.handler.read(Skill.class);
     }
 
     @Override
     public Skill save(Skill skillToSave) {
-        List<Skill> currentSkills = readSkillsFromFile();
+        List<Skill> currentSkills = this.handler.read(Skill.class);
 
         Integer id = generateNewId(currentSkills);
         skillToSave.setId(id);
         currentSkills.add(skillToSave);
-        writeSkillsToFile(currentSkills);
+        this.handler.write(currentSkills);
         return skillToSave;
     }
 
