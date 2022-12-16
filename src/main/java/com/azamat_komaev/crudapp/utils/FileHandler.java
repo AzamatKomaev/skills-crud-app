@@ -24,7 +24,6 @@ public class FileHandler<T> {
 
         try {
             fileContent = new String(Files.readAllBytes(Paths.get(this.FILE_PATH)));
-            // Type type = new TypeToken<ArrayList<T>>(){}.getType();
             Type type = TypeToken.getParameterized(List.class, modelType).getType();
             elementsList = GSON.fromJson(fileContent, type);
         } catch (IOException e) {
