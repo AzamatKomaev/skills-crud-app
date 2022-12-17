@@ -38,7 +38,7 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
         Integer id = generateNewId(currentSkills);
         skillToSave.setId(id);
         currentSkills.add(skillToSave);
-        this.service.addItemToFile(currentSkills);
+        this.service.addItemsToFile(currentSkills);
         return skillToSave;
     }
 

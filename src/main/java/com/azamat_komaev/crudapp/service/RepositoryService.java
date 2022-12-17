@@ -34,7 +34,7 @@ public class RepositoryService<T> {
         return elementsList == null ? defaultList : elementsList;
     }
 
-    public void addItemToFile(List<T> elements) {
+    public void addItemsToFile(List<T> elements) {
         String json = GSON.toJson(elements);
         try {
             Files.write(Paths.get(this.FILE_PATH), json.getBytes());
