@@ -17,6 +17,12 @@ public class RepositoryService<T> {
         this.FILE_PATH = filePath;
     }
 
+    /**
+     * Get items from file and return them as collection.
+     *
+     * @param modelType model type of elements stored in file
+     * @return List<T>
+     */
     public List<T> getItemsFromFile(Class<T> modelType) {
         String fileContent;
         List<T> elementsList;
@@ -34,6 +40,11 @@ public class RepositoryService<T> {
         return elementsList == null ? defaultList : elementsList;
     }
 
+    /**
+     * Add list of items to file.
+     *
+     * @param elements objects should be added to file.
+     */
     public void addItemsToFile(List<T> elements) {
         String json = GSON.toJson(elements);
         try {
