@@ -2,15 +2,15 @@ package com.azamat_komaev.crudapp.repository.gson;
 
 import com.azamat_komaev.crudapp.model.Skill;
 import com.azamat_komaev.crudapp.repository.SkillRepository;
-import com.azamat_komaev.crudapp.utils.FileHandler;
+import com.azamat_komaev.crudapp.service.RepositoryService;
 
 import java.util.*;
 
 public class GsonSkillRepositoryImpl implements SkillRepository {
-    private final FileHandler<Skill> handler;
+    private final RepositoryService<Skill> service;
 
     public GsonSkillRepositoryImpl() {
-        this.handler = new FileHandler<Skill>("src/main/resources/skills.json");
+        this.service = new RepositoryService<>("src/main/resources/skills.json");
     }
 
     private Integer generateNewId(List<Skill> skills) {
@@ -20,7 +20,7 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public Skill getById(Integer id) {
-        return this.handler.read(Skill.class).stream()
+        return this.service.getItemsFromFile(Skill.class).stream()
             .filter(s -> s.getId().equals(id))
             .findFirst()
             .orElse(null);
@@ -28,17 +28,17 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public List<Skill> getAll() {
-        return this.handler.read(Skill.class);
+        return this.service.getItemsFromFile(Skill.class);
     }
 
     @Override
     public Skill save(Skill skillToSave) {
-        List<Skill> currentSkills = this.handler.read(Skill.class);
+        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
 
         Integer id = generateNewId(currentSkills);
         skillToSave.setId(id);
         currentSkills.add(skillToSave);
-        this.handler.write(currentSkills);
+        this.service.addItemToFile(currentSkills);
         return skillToSave;
     }
 

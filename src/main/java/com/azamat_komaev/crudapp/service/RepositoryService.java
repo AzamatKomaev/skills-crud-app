@@ -1,4 +1,4 @@
-package com.azamat_komaev.crudapp.utils;
+package com.azamat_komaev.crudapp.service;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,15 +9,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class FileHandler<T> {
+public class RepositoryService<T> {
     private final String FILE_PATH;
     private final Gson GSON = new Gson();
 
-    public FileHandler(String filePath) {
+    public RepositoryService(String filePath) {
         this.FILE_PATH = filePath;
     }
 
-    public List<T> read(Class<T> modelType) {
+    public List<T> getItemsFromFile(Class<T> modelType) {
         String fileContent;
         List<T> elementsList;
         List<T> defaultList = new ArrayList<T>(Collections.emptyList());
@@ -34,7 +34,7 @@ public class FileHandler<T> {
         return elementsList == null ? defaultList : elementsList;
     }
 
-    public void write(List<T> elements) {
+    public void addItemToFile(List<T> elements) {
         String json = GSON.toJson(elements);
         try {
             Files.write(Paths.get(this.FILE_PATH), json.getBytes());
