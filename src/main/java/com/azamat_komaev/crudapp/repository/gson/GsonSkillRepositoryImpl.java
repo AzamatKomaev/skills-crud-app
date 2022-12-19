@@ -5,6 +5,7 @@ import com.azamat_komaev.crudapp.repository.SkillRepository;
 import com.azamat_komaev.crudapp.service.RepositoryService;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GsonSkillRepositoryImpl implements SkillRepository {
     private final RepositoryService<Skill> service;
@@ -33,8 +34,11 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public Skill save(Skill skillToSave) {
-        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
+        if (skillToSave.getName() == null) {
+            throw new NullPointerException();
+        }
 
+        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
         Integer id = generateNewId(currentSkills);
         skillToSave.setId(id);
         currentSkills.add(skillToSave);
@@ -44,10 +48,26 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public Skill update(Skill skill) {
-        return null;
+        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
+
+        currentSkills = currentSkills.stream()
+            .map(s -> Objects.equals(s.getId(), skill.getId()) ? skill : s)
+            .collect(Collectors.toList());
+
+        this.service.addItemsToFile(currentSkills);
+        return skill;
+
     }
 
     @Override
-    public void deleteById(Integer integer) {}
+    public void deleteById(Integer id) {
+        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
+
+        currentSkills = currentSkills.stream()
+            .filter(s -> !Objects.equals(s.getId(), id))
+            .collect(Collectors.toList());
+
+        this.service.addItemsToFile(currentSkills);
+    }
 }
 

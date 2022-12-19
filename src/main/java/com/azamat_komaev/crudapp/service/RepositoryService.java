@@ -26,7 +26,7 @@ public class RepositoryService<T> {
     public List<T> getItemsFromFile(Class<T> modelType) {
         String fileContent;
         List<T> elementsList;
-        List<T> defaultList = new ArrayList<T>(Collections.emptyList());
+        List<T> defaultList = new ArrayList<>(Collections.emptyList());
 
         try {
             fileContent = new String(Files.readAllBytes(Paths.get(this.FILE_PATH)));
@@ -34,7 +34,7 @@ public class RepositoryService<T> {
             elementsList = GSON.fromJson(fileContent, type);
         } catch (IOException e) {
             e.printStackTrace();
-            return Collections.emptyList();
+            return defaultList;
         }
 
         return elementsList == null ? defaultList : elementsList;

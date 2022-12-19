@@ -1,5 +1,7 @@
 package com.azamat_komaev.crudapp.model;
 
+import java.util.Objects;
+
 public class Skill {
     private Integer id;
     private String name;
@@ -42,5 +44,17 @@ public class Skill {
             "id=" + id +
             ", name='" + name + '\'' +
             '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Skill skill)) return false;
+        return Objects.equals(id, skill.id) && Objects.equals(name, skill.name) && status == skill.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, status);
     }
 }
