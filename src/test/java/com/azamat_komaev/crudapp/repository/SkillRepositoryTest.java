@@ -14,19 +14,20 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class SkillRepositoryTest {
-    SkillRepository repository = new GsonSkillRepositoryImpl();
+    private final SkillRepository repository = new GsonSkillRepositoryImpl();
+    private final String FILE_PATH = "src/main/resources/skills.json";
 
     @Before
     @After
     public void clearFileContent() {
         try {
-            Files.write(Paths.get("src/main/resources/skills.json"), new byte[]{});
+            Files.write(Paths.get(this.FILE_PATH), new byte[]{});
         } catch (IOException e) {
             System.out.println("Cannot clear skills.json file!");
         }
     }
 
-    public void saveThreeSkills() {
+    private void saveThreeSkills() {
         Skill skill1 = new Skill();
         skill1.setName("Soft-Skills");
         Skill skill2 = new Skill();
@@ -43,16 +44,15 @@ public class SkillRepositoryTest {
     public void testAddSkills() {
         saveThreeSkills();
 
-        List<Skill> skillList = this.repository.getAll();
-        System.out.println(skillList);
+        List<Skill> skillListFromRepository = this.repository.getAll();
         Skill[] skillsArrayFromGetById = {
             this.repository.getById(1),
             this.repository.getById(2),
             this.repository.getById(3)
         };
 
-        assertEquals(3, skillList.size());
-        assertArrayEquals(skillsArrayFromGetById, skillList.toArray());
+        assertEquals(3, skillListFromRepository.size());
+        assertArrayEquals(skillsArrayFromGetById, skillListFromRepository.toArray());
     }
 
     @Test
@@ -69,7 +69,7 @@ public class SkillRepositoryTest {
     }
 
     @Test
-    public void testCheckSkillFields() {
+    public void testCheckSkillModelFields() {
         saveThreeSkills();
 
         Skill testSkill = this.repository.getById(2);
@@ -78,6 +78,5 @@ public class SkillRepositoryTest {
         assertEquals(Integer.valueOf(2), testSkill.getId());
         assertEquals("Hard-Skills", testSkill.getName());
         assertEquals(Status.ACTIVE, testSkill.getStatus());
-
     }
 }
