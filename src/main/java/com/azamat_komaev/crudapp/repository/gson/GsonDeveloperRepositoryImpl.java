@@ -1,7 +1,6 @@
 package com.azamat_komaev.crudapp.repository.gson;
 
 import com.azamat_komaev.crudapp.model.Developer;
-import com.azamat_komaev.crudapp.model.Developer;
 import com.azamat_komaev.crudapp.model.Status;
 import com.azamat_komaev.crudapp.repository.DeveloperRepository;
 import com.azamat_komaev.crudapp.service.RepositoryService;
