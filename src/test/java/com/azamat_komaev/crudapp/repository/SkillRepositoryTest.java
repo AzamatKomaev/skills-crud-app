@@ -72,11 +72,34 @@ public class SkillRepositoryTest {
     public void testCheckSkillModelFields() {
         saveThreeSkills();
 
-        Skill testSkill = this.repository.getById(2);
+        Skill skill = this.repository.getById(2);
 
-        assertNotNull(testSkill);
-        assertEquals(Integer.valueOf(2), testSkill.getId());
-        assertEquals("Hard-Skills", testSkill.getName());
-        assertEquals(Status.ACTIVE, testSkill.getStatus());
+        assertNotNull(skill);
+        assertEquals(Integer.valueOf(2), skill.getId());
+        assertEquals("Hard-Skills", skill.getName());
+        assertEquals(Status.ACTIVE, skill.getStatus());
+    }
+
+    @Test
+    public void testUpdateSkill() {
+        saveThreeSkills();
+
+        /*
+            skillBeforeUpdate: skill gotten by id before update.
+            skillToUpdate: new Skill object use for update.
+            skillAfterUpdate: skill gotten by id after update.
+         */
+        Skill skillBeforeUpdate = this.repository.getById(2);
+        Skill skillAfterUpdate;
+        Skill skillToUpdate = new Skill();
+        skillToUpdate.setId(2);
+        skillToUpdate.setName("Sports");
+        this.repository.update(skillToUpdate);
+        skillAfterUpdate = this.repository.getById(2);
+
+        assertNotEquals(skillBeforeUpdate, skillToUpdate);
+        assertEquals(Integer.valueOf(2), skillAfterUpdate.getId());
+        assertEquals("Sports", skillAfterUpdate.getName());
+        assertEquals(Status.ACTIVE, skillAfterUpdate.getStatus());
     }
 }

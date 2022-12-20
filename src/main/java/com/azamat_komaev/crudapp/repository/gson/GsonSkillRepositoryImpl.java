@@ -1,6 +1,7 @@
 package com.azamat_komaev.crudapp.repository.gson;
 
 import com.azamat_komaev.crudapp.model.Skill;
+import com.azamat_komaev.crudapp.model.Status;
 import com.azamat_komaev.crudapp.repository.SkillRepository;
 import com.azamat_komaev.crudapp.service.RepositoryService;
 
@@ -64,7 +65,11 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
         List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
 
         currentSkills = currentSkills.stream()
-            .filter(s -> !Objects.equals(s.getId(), id))
+            .peek(s -> {
+                if (!Objects.equals(s.getId(), id)) {
+                    s.setStatus(Status.DELETED);
+                }
+            })
             .collect(Collectors.toList());
 
         this.service.addItemsToFile(currentSkills);
