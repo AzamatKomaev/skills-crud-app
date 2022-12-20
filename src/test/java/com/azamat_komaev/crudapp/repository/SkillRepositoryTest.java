@@ -102,4 +102,22 @@ public class SkillRepositoryTest {
         assertEquals("Sports", skillAfterUpdate.getName());
         assertEquals(Status.ACTIVE, skillAfterUpdate.getStatus());
     }
+
+    @Test
+    public void testDeleteSkill() {
+        saveThreeSkills();
+
+        Skill skillBeforeDelete = this.repository.getById(3);
+        this.repository.deleteById(3);
+        Skill skillAfterDelete = this.repository.getById(3);
+
+        assertEquals(3, this.repository.getAll().size());
+
+        System.out.println(skillBeforeDelete);
+        System.out.println(skillAfterDelete);
+        assertNotEquals(skillBeforeDelete, skillAfterDelete);
+        assertEquals(Integer.valueOf(3), skillAfterDelete.getId());
+        assertEquals(skillBeforeDelete.getName(), skillAfterDelete.getName());
+        assertEquals(Status.DELETED, skillAfterDelete.getStatus());
+    }
 }

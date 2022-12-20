@@ -43,6 +43,7 @@ public class Skill {
         return "Skill{" +
             "id=" + id +
             ", name='" + name + '\'' +
+            ", status=" + status +
             '}';
     }
 

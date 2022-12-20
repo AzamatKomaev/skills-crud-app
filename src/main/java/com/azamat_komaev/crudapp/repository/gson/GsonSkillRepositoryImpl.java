@@ -57,7 +57,6 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
         this.service.addItemsToFile(currentSkills);
         return skill;
-
     }
 
     @Override
@@ -66,7 +65,7 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
         currentSkills = currentSkills.stream()
             .peek(s -> {
-                if (!Objects.equals(s.getId(), id)) {
+                if (Objects.equals(s.getId(), id)) {
                     s.setStatus(Status.DELETED);
                 }
             })
