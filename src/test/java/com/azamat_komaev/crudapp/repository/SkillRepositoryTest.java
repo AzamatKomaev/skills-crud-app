@@ -107,14 +107,12 @@ public class SkillRepositoryTest {
     public void testDeleteSkill() {
         saveThreeSkills();
 
+        int skillListCount = this.repository.getAll().size();
         Skill skillBeforeDelete = this.repository.getById(3);
         this.repository.deleteById(3);
         Skill skillAfterDelete = this.repository.getById(3);
 
-        assertEquals(3, this.repository.getAll().size());
-
-        System.out.println(skillBeforeDelete);
-        System.out.println(skillAfterDelete);
+        assertEquals(3, skillListCount);
         assertNotEquals(skillBeforeDelete, skillAfterDelete);
         assertEquals(Integer.valueOf(3), skillAfterDelete.getId());
         assertEquals(skillBeforeDelete.getName(), skillAfterDelete.getName());
