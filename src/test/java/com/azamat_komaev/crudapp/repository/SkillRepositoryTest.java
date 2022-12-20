@@ -97,7 +97,7 @@ public class SkillRepositoryTest {
         this.repository.update(skillToUpdate);
         skillAfterUpdate = this.repository.getById(2);
 
-        assertNotEquals(skillBeforeUpdate, skillToUpdate);
+        assertNotEquals(skillBeforeUpdate, skillAfterUpdate);
         assertEquals(Integer.valueOf(2), skillAfterUpdate.getId());
         assertEquals("Sports", skillAfterUpdate.getName());
         assertEquals(Status.ACTIVE, skillAfterUpdate.getStatus());
