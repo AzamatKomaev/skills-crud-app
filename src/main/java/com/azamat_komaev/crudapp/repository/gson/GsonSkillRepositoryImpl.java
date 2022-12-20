@@ -35,10 +35,6 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public Skill save(Skill skillToSave) {
-        if (skillToSave.getName() == null) {
-            throw new NullPointerException();
-        }
-
         List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
         Integer id = generateNewId(currentSkills);
         skillToSave.setId(id);
