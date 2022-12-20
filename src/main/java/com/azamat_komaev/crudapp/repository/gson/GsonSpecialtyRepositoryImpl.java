@@ -36,9 +36,11 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
     @Override
     public Specialty save(Specialty specialtyToSave) {
         List<Specialty> currentSpecialties = this.service.getItemsFromFile(Specialty.class);
+
         Integer id = generateNewId(currentSpecialties);
         specialtyToSave.setId(id);
         currentSpecialties.add(specialtyToSave);
+
         this.service.addItemsToFile(currentSpecialties);
         return specialtyToSave;
     }

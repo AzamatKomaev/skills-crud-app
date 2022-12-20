@@ -8,6 +8,7 @@ public class Developer {
     private String lastName;
     private List<Skill> skills;
     private Specialty specialty;
+    private Status status = Status.ACTIVE;
 
     public Integer getId() {
         return id;
@@ -47,5 +48,13 @@ public class Developer {
 
     public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }
