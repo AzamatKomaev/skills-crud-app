@@ -84,14 +84,10 @@ public class SkillRepositoryTest {
     public void testUpdateSkill() {
         saveThreeSkills();
 
-        /*
-            skillBeforeUpdate: skill gotten by id before update.
-            skillToUpdate: new Skill object use for update.
-            skillAfterUpdate: skill gotten by id after update.
-         */
         Skill skillBeforeUpdate = this.repository.getById(2);
         Skill skillAfterUpdate;
         Skill skillToUpdate = new Skill();
+
         skillToUpdate.setId(2);
         skillToUpdate.setName("Sports");
         this.repository.update(skillToUpdate);
