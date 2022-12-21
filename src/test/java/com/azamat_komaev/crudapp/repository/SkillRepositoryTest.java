@@ -21,12 +21,9 @@ public class SkillRepositoryTest {
     }
 
     private void saveThreeSkills() {
-        Skill skill1 = new Skill();
-        skill1.setName("Soft-Skills");
-        Skill skill2 = new Skill();
-        skill2.setName("Hard-Skills");
-        Skill skill3 = new Skill();
-        skill3.setName("No-code");
+        Skill skill1 = new Skill(1, "Soft-Skills");
+        Skill skill2 = new Skill(2, "Hard-Skills");
+        Skill skill3 = new Skill(3, "No-Code");
 
         this.repository.save(skill1);
         this.repository.save(skill2);
