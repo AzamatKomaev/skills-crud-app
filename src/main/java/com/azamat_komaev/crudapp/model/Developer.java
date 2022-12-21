@@ -10,6 +10,18 @@ public class Developer {
     private Specialty specialty;
     private Status status = Status.ACTIVE;
 
+    public Developer() {}
+
+    public Developer(Integer id, String firstName, String lastName,
+                     List<Skill> skills, Specialty specialty, Status status) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.skills = skills;
+        this.specialty = specialty;
+        this.status = status;
+    }
+
     public Integer getId() {
         return id;
     }
