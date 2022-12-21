@@ -30,11 +30,10 @@ public class DeveloperRepositoryTest {
         skillList.add(new Skill(2, "Hard-Skills"));
         skillList.add(new Skill(3, "No-Code"));
 
-        Developer developer1 = new Developer();
-        developer1.setFirstName("Azamat");
-        developer1.setLastName("Komaev");
-        developer1.setSkills(skillList);
-        developer1.setSpecialty(specialty1);
+        Developer developer1 = new Developer(1, "Azamat", "Komaev", skillList, specialty1);
+        Developer developer2 = new Developer(2, "Sasha", "Mironov", skillList, specialty2);
 
+        this.repository.save(developer1);
+        this.repository.save(developer2);
     }
 }
