@@ -35,14 +35,14 @@ public class SkillRepositoryTest {
         saveThreeSkills();
 
         List<Skill> skillListFromRepository = this.repository.getAll();
-        Skill[] skillsArrayFromGetById = {
+        Skill[] skillArrayFromGetById = {
             this.repository.getById(1),
             this.repository.getById(2),
             this.repository.getById(3)
         };
 
         assertEquals(3, skillListFromRepository.size());
-        assertArrayEquals(skillsArrayFromGetById, skillListFromRepository.toArray());
+        assertArrayEquals(skillArrayFromGetById, skillListFromRepository.toArray());
     }
 
     @Test
@@ -80,6 +80,7 @@ public class SkillRepositoryTest {
 
         skillToUpdate.setId(2);
         skillToUpdate.setName("Sports");
+
         this.repository.update(skillToUpdate);
         skillAfterUpdate = this.repository.getById(2);
 

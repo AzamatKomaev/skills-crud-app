@@ -1,6 +1,7 @@
 package com.azamat_komaev.crudapp.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Developer {
     private Integer id;
@@ -67,5 +68,17 @@ public class Developer {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Developer developer)) return false;
+        return id.equals(developer.id) && firstName.equals(developer.firstName) && lastName.equals(developer.lastName) && skills.equals(developer.skills) && specialty.equals(developer.specialty) && status == developer.status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, skills, specialty, status);
     }
 }
