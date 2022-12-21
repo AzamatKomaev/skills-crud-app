@@ -3,6 +3,7 @@ package com.azamat_komaev.crudapp.repository;
 import com.azamat_komaev.crudapp.model.Specialty;
 import com.azamat_komaev.crudapp.model.Status;
 import com.azamat_komaev.crudapp.repository.gson.GsonSpecialtyRepositoryImpl;
+import com.azamat_komaev.crudapp.util.RepositoryTestUtil;
 import org.junit.*;
 
 import java.io.IOException;
@@ -20,11 +21,7 @@ public class SpecialtyRepositoryTest {
     @Before
     @After
     public void clearFileContent() {
-        try {
-            Files.write(Paths.get(this.FILE_PATH), new byte[]{});
-        } catch (IOException e) {
-            System.out.println("Cannot clear specialties.json file!");
-        }
+        RepositoryTestUtil.clearFileContent(this.FILE_PATH);
     }
     
     private void saveThreeSpecialties() {

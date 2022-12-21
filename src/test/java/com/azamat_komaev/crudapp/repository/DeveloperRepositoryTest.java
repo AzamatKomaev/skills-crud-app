@@ -1,7 +1,7 @@
 package com.azamat_komaev.crudapp.repository;
 
-import com.azamat_komaev.crudapp.repository.TestService;
 import com.azamat_komaev.crudapp.repository.gson.GsonDeveloperRepositoryImpl;
+import com.azamat_komaev.crudapp.util.RepositoryTestUtil;
 import org.junit.*;
 
 
@@ -12,6 +12,6 @@ public class DeveloperRepositoryTest {
     @Before
     @After
     public void clearFileContent() {
-        TestService.clearFileContent(this.FILE_PATH);
+        RepositoryTestUtil.clearFileContent(this.FILE_PATH);
     }
 }

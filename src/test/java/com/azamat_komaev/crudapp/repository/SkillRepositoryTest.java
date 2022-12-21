@@ -3,6 +3,7 @@ package com.azamat_komaev.crudapp.repository;
 import com.azamat_komaev.crudapp.model.Skill;
 import com.azamat_komaev.crudapp.model.Status;
 import com.azamat_komaev.crudapp.repository.gson.GsonSkillRepositoryImpl;
+import com.azamat_komaev.crudapp.util.RepositoryTestUtil;
 import org.junit.*;
 
 import java.io.IOException;
@@ -20,11 +21,7 @@ public class SkillRepositoryTest {
     @Before
     @After
     public void clearFileContent() {
-        try {
-            Files.write(Paths.get(this.FILE_PATH), new byte[]{});
-        } catch (IOException e) {
-            System.out.println("Cannot clear skills.json file!");
-        }
+        RepositoryTestUtil.clearFileContent(this.FILE_PATH);
     }
 
     private void saveThreeSkills() {
