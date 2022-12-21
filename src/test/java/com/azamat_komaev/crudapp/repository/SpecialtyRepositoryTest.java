@@ -6,10 +6,6 @@ import com.azamat_komaev.crudapp.repository.gson.GsonSpecialtyRepositoryImpl;
 import com.azamat_komaev.crudapp.util.RepositoryTestUtil;
 import org.junit.*;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import java.util.List;
 
 import static org.junit.Assert.*;
