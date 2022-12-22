@@ -11,11 +11,6 @@ public interface GenericRepository<T, ID> {
 
     T update(T t);
 
-    /**
-     * Delete object by id. Deleted object is not removed from file
-     * but changes its status to Status.DELETED.
-     * @param id skill id should be deleted
-     */
     void deleteById(ID id);
 }
 
