@@ -5,6 +5,7 @@ import com.azamat_komaev.crudapp.repository.SkillRepository;
 import com.azamat_komaev.crudapp.repository.gson.GsonSkillRepositoryImpl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class SkillController {
     private final SkillRepository repository;
@@ -17,22 +18,30 @@ public class SkillController {
         return this.repository.getAll();
     }
 
-    public Skill getOne(Integer id) {
-        return this.repository.getById(id);
+    public Skill getOne(Integer id) throws NoSuchElementException {
+        Skill skill = this.repository.getById(id);
+
+        if (skill == null) {
+            throw new NoSuchElementException("There is no such element in database!");
+        }
+
+        return skill;
     }
 
-    public Skill save(String name) {
+    public Skill save(String name) throws NoSuchElementException {
         Skill skillToSave = new Skill();
         skillToSave.setName(name);
         return this.repository.save(skillToSave);
     }
 
-    public Skill update(Integer id, String name) {
-        Skill skillToUpdate = new Skill(id, name);
+    public Skill update(Integer id, String name) throws NoSuchElementException {
+        Skill skillToUpdate = getOne(id);
+        skillToUpdate.setName(name);
         return this.repository.update(skillToUpdate);
     }
 
-    public void destroy(Integer id) {
+    public void destroy(Integer id) throws NoSuchElementException {
+        getOne(id);
         this.repository.deleteById(id);
     }
 }

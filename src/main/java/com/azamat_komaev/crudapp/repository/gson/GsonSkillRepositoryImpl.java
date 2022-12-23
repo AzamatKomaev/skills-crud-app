@@ -6,6 +6,7 @@ import com.azamat_komaev.crudapp.repository.SkillRepository;
 import com.azamat_komaev.crudapp.service.RepositoryService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class GsonSkillRepositoryImpl implements SkillRepository {
@@ -46,13 +47,20 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
     @Override
     public Skill update(Skill skill) {
         List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
+        AtomicBoolean wasUpdated = new AtomicBoolean(false);
 
         currentSkills = currentSkills.stream()
-            .map(s -> Objects.equals(s.getId(), skill.getId()) ? skill : s)
+            .map(s -> {
+                if (Objects.equals(s.getId(), skill.getId())) {
+                    wasUpdated.set(true);
+                    return skill;
+                }
+                return s;
+            })
             .collect(Collectors.toList());
 
         this.service.addItemsToFile(currentSkills);
-        return skill;
+        return wasUpdated.get() ? skill : null;
     }
 
     @Override
