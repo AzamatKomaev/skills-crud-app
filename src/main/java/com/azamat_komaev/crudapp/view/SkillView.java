@@ -6,7 +6,7 @@ import com.azamat_komaev.crudapp.model.Skill;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class SkillView {
+public class SkillView implements GenericView {
     private final SkillController controller;
     private final Scanner scanner;
 
