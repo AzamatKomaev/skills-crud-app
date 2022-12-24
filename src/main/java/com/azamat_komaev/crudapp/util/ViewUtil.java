@@ -2,6 +2,7 @@ package com.azamat_komaev.crudapp.util;
 
 import com.azamat_komaev.crudapp.view.GenericView;
 import com.azamat_komaev.crudapp.view.SkillView;
+import com.azamat_komaev.crudapp.view.SpecialtyView;
 
 import java.util.Scanner;
 
@@ -16,6 +17,8 @@ public class ViewUtil {
         switch (entityName) {
             case "skill":
                 return new SkillView();
+            case "specialty":
+                return new SpecialtyView();
             default:
                 System.out.println("Invalid entity name!");
                 return null;
