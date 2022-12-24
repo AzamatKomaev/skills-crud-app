@@ -1,16 +1,18 @@
 package com.azamat_komaev.crudapp;
 
-import com.azamat_komaev.crudapp.model.Skill;
-import com.azamat_komaev.crudapp.repository.SkillRepository;
-import com.azamat_komaev.crudapp.repository.gson.GsonSkillRepositoryImpl;
+import com.azamat_komaev.crudapp.view.SkillView;
 
-import java.util.List;
+import java.util.Scanner;
 
 public class AppRunner {
-
     public static void main(String[] args) {
-        Skill skill = new Skill();
-        SkillRepository repository = new GsonSkillRepositoryImpl();
-        repository.save(skill);
+        SkillView view = new SkillView();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Enter commmand!");
+            String command = scanner.nextLine();
+            view.runCommand(command);
+        }
     }
 }

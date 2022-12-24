@@ -21,7 +21,7 @@ public class SkillView {
 
     private void printOneSkill() {
         System.out.print("Enter skill id should be gotten: ");
-        Integer id = this.scanner.nextInt();
+        Integer id = Integer.parseInt(this.scanner.nextLine());
         Skill skillToPrint;
 
         try {
@@ -44,7 +44,7 @@ public class SkillView {
 
     private void updateAndPrintSkill() {
         System.out.print("Enter skill id should be updated: ");
-        Integer id = this.scanner.nextInt();
+        Integer id = Integer.parseInt(this.scanner.nextLine());
         System.out.print("Enter new name for skill you want to update: ");
         String name = this.scanner.nextLine();
 
@@ -59,7 +59,7 @@ public class SkillView {
 
     private void deleteSkillAndPrintWasOperationSuccessful() {
         System.out.print("Enter skill id should be deleted: ");
-        Integer id = this.scanner.nextInt();
+        Integer id = Integer.parseInt(this.scanner.nextLine());
 
         try {
             this.controller.destroy(id);
