@@ -9,6 +9,7 @@ import com.azamat_komaev.crudapp.repository.gson.GsonSkillRepositoryImpl;
 import com.azamat_komaev.crudapp.repository.gson.GsonSpecialtyRepositoryImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DeveloperControllerUtil {

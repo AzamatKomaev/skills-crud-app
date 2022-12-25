@@ -74,11 +74,25 @@ public class Developer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Developer developer)) return false;
-        return id.equals(developer.id) && firstName.equals(developer.firstName) && lastName.equals(developer.lastName) && skills.equals(developer.skills) && specialty.equals(developer.specialty) && status == developer.status;
+        return id.equals(developer.id) && firstName.equals(developer.firstName) &&
+               lastName.equals(developer.lastName) && skills.equals(developer.skills) &&
+               specialty.equals(developer.specialty) && status == developer.status;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, skills, specialty, status);
+    }
+
+    @Override
+    public String toString() {
+        return "Developer{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            ", skills=" + skills +
+            ", specialty=" + specialty +
+            ", status=" + status +
+            '}';
     }
 }

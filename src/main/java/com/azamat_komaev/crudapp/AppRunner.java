@@ -11,14 +11,19 @@ public class AppRunner {
             """);
 
         while (true) {
-            String entityName = ViewUtil.askForEntityName();
+            String input = ViewUtil.askForAction();
+            String[] inputParts = ViewUtil.splitInputOnEntityNameAndCommand(input);
+
+            String entityName = inputParts[0];
+            String command = inputParts[1];
+
             GenericView view = ViewUtil.getViewModelByEntityName(entityName);
 
             if (view == null) {
                 continue;
             }
 
-            ViewUtil.askForCommandAndRunIt(view);
+            view.runCommand(command);
         }
     }
 }

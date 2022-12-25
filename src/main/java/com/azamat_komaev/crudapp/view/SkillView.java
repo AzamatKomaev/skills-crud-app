@@ -70,11 +70,12 @@ public class SkillView implements GenericView {
 
     }
 
+    @Override
     public void runCommand(String command) {
         switch (command) {
             case "get_all" -> printAllSkills();
             case "get_one" -> printOneSkill();
-            case "save" -> saveAndPrintSkill();
+            case "create" -> saveAndPrintSkill();
             case "update" -> updateAndPrintSkill();
             case "delete" -> deleteSkillAndPrintWasOperationSuccessful();
             default -> System.out.println("Invalid command, try again!");

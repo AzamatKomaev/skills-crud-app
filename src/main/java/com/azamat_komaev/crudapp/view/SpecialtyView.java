@@ -70,11 +70,12 @@ public class SpecialtyView implements GenericView {
 
     }
 
+    @Override
     public void runCommand(String command) {
         switch (command) {
             case "get_all" -> printAllSpecialtys();
             case "get_one" -> printOneSpecialty();
-            case "save" -> saveAndPrintSpecialty();
+            case "create" -> saveAndPrintSpecialty();
             case "update" -> updateAndPrintSpecialty();
             case "delete" -> deleteSpecialtyAndPrintWasOperationSuccessful();
             default -> System.out.println("Invalid command, try again!");

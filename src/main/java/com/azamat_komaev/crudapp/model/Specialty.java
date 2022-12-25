@@ -7,7 +7,8 @@ public class Specialty {
     private String name;
     private Status status = Status.ACTIVE;
 
-    public Specialty() {}
+    public Specialty() {
+    }
 
     public Specialty(Integer id, String name) {
         this.id = id;
@@ -48,5 +49,14 @@ public class Specialty {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Specialty{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", status=" + status +
+            '}';
     }
 }
