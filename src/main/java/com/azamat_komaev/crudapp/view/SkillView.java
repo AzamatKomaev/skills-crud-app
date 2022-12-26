@@ -15,11 +15,11 @@ public class SkillView implements GenericView {
         this.scanner = new Scanner(System.in);
     }
 
-    private void printAllSkills() {
+    public void printAll() {
         System.out.println(this.controller.getAll());
     }
 
-    private void printOneSkill() {
+    public void printOne() {
         System.out.print("Enter skill id should be gotten: ");
         Integer id = Integer.parseInt(this.scanner.nextLine());
         Skill skillToPrint;
@@ -33,16 +33,14 @@ public class SkillView implements GenericView {
 
     }
 
-    private void saveAndPrintSkill() {
+    public void saveAndPrint() {
         System.out.print("Enter name for new skill: ");
         String name = this.scanner.nextLine();
-
         Skill newSkill = this.controller.save(name);
-
         System.out.println(newSkill);
     }
 
-    private void updateAndPrintSkill() {
+    public void updateAndPrint() {
         System.out.print("Enter skill id should be updated: ");
         Integer id = Integer.parseInt(this.scanner.nextLine());
         System.out.print("Enter new name for skill you want to update: ");
@@ -54,10 +52,9 @@ public class SkillView implements GenericView {
         } catch (NoSuchElementException e) {
             System.out.println("There is no any skill with such id!");
         }
-
     }
 
-    private void deleteSkillAndPrintWasOperationSuccessful() {
+    public void deleteAndPrintWasOperationSuccessful() {
         System.out.print("Enter skill id should be deleted: ");
         Integer id = Integer.parseInt(this.scanner.nextLine());
 
@@ -66,19 +63,6 @@ public class SkillView implements GenericView {
             System.out.println("The skill was deleted successful!");
         } catch (NoSuchElementException e) {
             System.out.println("There is no any skill with such id!");
-        }
-
-    }
-
-    @Override
-    public void runCommand(String command) {
-        switch (command) {
-            case "get_all" -> printAllSkills();
-            case "get_one" -> printOneSkill();
-            case "create" -> saveAndPrintSkill();
-            case "update" -> updateAndPrintSkill();
-            case "delete" -> deleteSkillAndPrintWasOperationSuccessful();
-            default -> System.out.println("Invalid command, try again!");
         }
     }
 }

@@ -27,7 +27,7 @@ public class DeveloperControllerUtil {
     }
 
     public static void setDeveloperModelFields(Developer developer, String firstName, String lastName,
-                                                    List<Skill> skillList, Specialty specialty) {
+                                               List<Skill> skillList, Specialty specialty) {
         developer.setFirstName(firstName);
         developer.setLastName(lastName);
         developer.setSkills(skillList);

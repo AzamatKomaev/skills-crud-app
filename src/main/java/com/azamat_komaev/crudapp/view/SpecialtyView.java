@@ -15,11 +15,11 @@ public class SpecialtyView implements GenericView {
         this.scanner = new Scanner(System.in);
     }
 
-    private void printAllSpecialtys() {
+    public void printAll() {
         System.out.println(this.controller.getAll());
     }
 
-    private void printOneSpecialty() {
+    public void printOne() {
         System.out.print("Enter specialty id should be gotten: ");
         Integer id = Integer.parseInt(this.scanner.nextLine());
         Specialty specialtyToPrint;
@@ -33,7 +33,7 @@ public class SpecialtyView implements GenericView {
 
     }
 
-    private void saveAndPrintSpecialty() {
+    public void saveAndPrint() {
         System.out.print("Enter name for new specialty: ");
         String name = this.scanner.nextLine();
 
@@ -42,7 +42,7 @@ public class SpecialtyView implements GenericView {
         System.out.println(newSpecialty);
     }
 
-    private void updateAndPrintSpecialty() {
+    public void updateAndPrint() {
         System.out.print("Enter specialty id should be updated: ");
         Integer id = Integer.parseInt(this.scanner.nextLine());
         System.out.print("Enter new name for specialty you want to update: ");
@@ -54,10 +54,9 @@ public class SpecialtyView implements GenericView {
         } catch (NoSuchElementException e) {
             System.out.println("There is no any specialty with such id!");
         }
-
     }
 
-    private void deleteSpecialtyAndPrintWasOperationSuccessful() {
+    public void deleteAndPrintWasOperationSuccessful() {
         System.out.print("Enter specialty id should be deleted: ");
         Integer id = Integer.parseInt(this.scanner.nextLine());
 
@@ -66,19 +65,6 @@ public class SpecialtyView implements GenericView {
             System.out.println("The specialty was deleted successful!");
         } catch (NoSuchElementException e) {
             System.out.println("There is no any specialty with such id!");
-        }
-
-    }
-
-    @Override
-    public void runCommand(String command) {
-        switch (command) {
-            case "get_all" -> printAllSpecialtys();
-            case "get_one" -> printOneSpecialty();
-            case "create" -> saveAndPrintSpecialty();
-            case "update" -> updateAndPrintSpecialty();
-            case "delete" -> deleteSpecialtyAndPrintWasOperationSuccessful();
-            default -> System.out.println("Invalid command, try again!");
         }
     }
 }

@@ -32,27 +32,21 @@ public class DeveloperController {
     }
 
     public Developer save(String firstName, String lastName,
-                          List<Integer> skillIds, Integer specialtyId) throws NoSuchElementException {
+                          List<Skill> skillList, Specialty specialty) {
         Developer developerToSave = new Developer();
 
-        List<Skill> skillsListToSave = DeveloperControllerUtil.getSKillListByIds(skillIds);
-        Specialty specialtyToSave = DeveloperControllerUtil.getSpecialtyById(specialtyId);
-
-        DeveloperControllerUtil.setDeveloperModelFields(developerToSave, firstName, lastName,
-                                                        skillsListToSave, specialtyToSave);
+        DeveloperControllerUtil.setDeveloperModelFields(developerToSave, firstName,
+                                                        lastName, skillList, specialty);
 
         return this.repository.save(developerToSave);
     }
 
     public Developer update(Integer id, String firstName, String lastName,
-                            List<Integer> skillIds, Integer specialtyId) throws NoSuchElementException {
+                            List<Skill> skillList, Specialty specialty) throws NoSuchElementException {
         Developer developerToUpdate = getOne(id);
 
-        List<Skill> skillsListToUpdate = DeveloperControllerUtil.getSKillListByIds(skillIds);
-        Specialty specialtyToUpdate = DeveloperControllerUtil.getSpecialtyById(specialtyId);
-
-        DeveloperControllerUtil.setDeveloperModelFields(developerToUpdate, firstName, lastName,
-                                                        skillsListToUpdate, specialtyToUpdate);
+        DeveloperControllerUtil.setDeveloperModelFields(developerToUpdate, firstName,
+                                                        lastName, skillList, specialty);
 
         return this.repository.update(developerToUpdate);
     }
