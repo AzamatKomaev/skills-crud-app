@@ -4,13 +4,12 @@ import com.azamat_komaev.crudapp.controller.DeveloperController;
 import com.azamat_komaev.crudapp.model.Developer;
 import com.azamat_komaev.crudapp.util.ViewUtil;
 
-import javax.swing.text.View;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class DeveloperView implements GenericView {
+public class DeveloperView extends View<Developer> {
     private final DeveloperController controller;
     private final Scanner scanner;
 
@@ -76,7 +75,6 @@ public class DeveloperView implements GenericView {
         } catch (NoSuchElementException e) {
             System.out.println("There is no any developer with such id!");
         }
-
     }
 
     @Override

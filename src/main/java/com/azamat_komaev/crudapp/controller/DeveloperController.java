@@ -4,12 +4,9 @@ import com.azamat_komaev.crudapp.model.Developer;
 import com.azamat_komaev.crudapp.model.Skill;
 import com.azamat_komaev.crudapp.model.Specialty;
 import com.azamat_komaev.crudapp.repository.DeveloperRepository;
-import com.azamat_komaev.crudapp.repository.SkillRepository;
 import com.azamat_komaev.crudapp.repository.gson.GsonDeveloperRepositoryImpl;
-import com.azamat_komaev.crudapp.repository.gson.GsonSkillRepositoryImpl;
 import com.azamat_komaev.crudapp.util.DeveloperControllerUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
