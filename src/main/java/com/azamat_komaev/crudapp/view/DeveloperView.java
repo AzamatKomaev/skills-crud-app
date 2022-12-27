@@ -4,36 +4,70 @@ import com.azamat_komaev.crudapp.controller.DeveloperController;
 import com.azamat_komaev.crudapp.model.Developer;
 import com.azamat_komaev.crudapp.model.Skill;
 import com.azamat_komaev.crudapp.model.Specialty;
-import com.azamat_komaev.crudapp.service.DeveloperViewService;
-import com.azamat_komaev.crudapp.util.ViewUtil;
+import com.azamat_komaev.crudapp.repository.SkillRepository;
+import com.azamat_komaev.crudapp.repository.SpecialtyRepository;
+import com.azamat_komaev.crudapp.repository.gson.GsonSkillRepositoryImpl;
+import com.azamat_komaev.crudapp.repository.gson.GsonSpecialtyRepositoryImpl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
 public class DeveloperView implements GenericView {
-    public final DeveloperController controller;
-    private final DeveloperViewService service;
+    public final DeveloperController developerController;
     private final Scanner scanner;
 
     public DeveloperView() {
-        this.controller = new DeveloperController();
-        this.service = new DeveloperViewService();
+        this.developerController = new DeveloperController();
         this.scanner = new Scanner(System.in);
     }
 
+    private Integer readAndParseId() {
+        System.out.print("Enter id: ");
+        return Integer.parseInt(this.scanner.nextLine());
+    }
+
+    private String readAndParseFirstName() {
+        System.out.print("Enter firstName: ");
+        return scanner.nextLine();
+    }
+
+    private String readAndParseLastName() {
+        System.out.print("Enter lastName: ");
+        return scanner.nextLine();
+    }
+
+    private List<Skill> readAndParseSkillList() {
+        System.out.print("Enter list of skill ids seperated with spaces: ");
+        String[] skillsIdsString = this.scanner.nextLine().split(" ");
+
+        List<Integer> skillsIds = Arrays.stream(skillsIdsString)
+            .mapToInt(Integer::parseInt)
+            .boxed()
+            .toList();
+
+        SkillRepository skillRepository = new GsonSkillRepositoryImpl();
+        List<Skill> skillList = new ArrayList<>();
+        skillsIds.forEach(id -> skillList.add(skillRepository.getById(id)));
+        return skillList;
+    }
+
+    private Specialty readAndParseSpecialty() {
+        System.out.print("Enter specialty id: ");
+        Integer specialtyId = Integer.parseInt(this.scanner.nextLine());
+
+        SpecialtyRepository repository = new GsonSpecialtyRepositoryImpl();
+        return repository.getById(specialtyId);
+    }
+
     public void printAll() {
-        System.out.println(this.controller.getAll());
+        System.out.println(this.developerController.getAll());
     }
 
     public void printOne() {
-        System.out.print("Enter developer id should be gotten: ");
-        Integer id = Integer.parseInt(this.scanner.nextLine());
+        Integer id = readAndParseId();
         Developer developerToPrint;
 
         try {
-            developerToPrint = this.controller.getOne(id);
+            developerToPrint = this.developerController.getOne(id);
             System.out.println(developerToPrint);
         } catch (NoSuchElementException e) {
             System.out.println("There is no any developer with such id!");
@@ -41,24 +75,24 @@ public class DeveloperView implements GenericView {
     }
 
     public void saveAndPrint() {
-        String firstName = this.service.readAndParseFirstName();
-        String lastName = this.service.readAndParseLastName();
-        List<Skill> skillList = this.service.readAndParseSkillList();
-        Specialty specialty = this.service.readAndParseSpecialty();
+        String firstName = readAndParseFirstName();
+        String lastName = readAndParseLastName();
+        List<Skill> skillList = readAndParseSkillList();
+        Specialty specialty = readAndParseSpecialty();
 
-        Developer newDeveloper = this.controller.save(firstName, lastName, skillList, specialty);
+        Developer newDeveloper = this.developerController.save(firstName, lastName, skillList, specialty);
         System.out.println(newDeveloper);
     }
 
     public void updateAndPrint() {
-        Integer id = this.service.readAndParseId();
-        String firstName = this.service.readAndParseFirstName();
-        String lastName = this.service.readAndParseLastName();
-        List<Skill> skillList = this.service.readAndParseSkillList();
-        Specialty specialty = this.service.readAndParseSpecialty();
+        Integer id = readAndParseId();
+        String firstName = readAndParseFirstName();
+        String lastName = readAndParseLastName();
+        List<Skill> skillList = readAndParseSkillList();
+        Specialty specialty = readAndParseSpecialty();
 
         try {
-            Developer developerToPrint = this.controller.update(id, firstName, lastName, skillList, specialty);
+            Developer developerToPrint = this.developerController.update(id, firstName, lastName, skillList, specialty);
             System.out.println(developerToPrint);
         } catch (NoSuchElementException e) {
             System.out.println("There is no any developer with such id!");
@@ -66,11 +100,10 @@ public class DeveloperView implements GenericView {
     }
 
     public void deleteAndPrintWasOperationSuccessful() {
-        System.out.print("Enter developer id should be deleted: ");
-        Integer id = Integer.parseInt(this.scanner.nextLine());
+        Integer id = readAndParseId();
 
         try {
-            this.controller.destroy(id);
+            this.developerController.destroy(id);
             System.out.println("The developer was deleted successful!");
         } catch (NoSuchElementException e) {
             System.out.println("There is no any developer with such id!");

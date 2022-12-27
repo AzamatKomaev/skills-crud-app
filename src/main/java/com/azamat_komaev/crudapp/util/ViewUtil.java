@@ -31,11 +31,4 @@ public class ViewUtil {
                 return null;
         }
     }
-
-    public static void askForCommandAndRunIt(GenericView view) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter commmand: ");
-        String command = scanner.nextLine();
-        view.runCommand(command);
-    }
 }

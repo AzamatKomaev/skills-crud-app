@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
-    private final RepositoryService<Specialty> service;
+    private final RepositoryService<Specialty> repositoryService;
 
     public GsonSpecialtyRepositoryImpl() {
-        this.service = new RepositoryService<>("src/main/resources/specialties.json");
+        this.repositoryService = new RepositoryService<>("src/main/resources/specialties.json");
     }
 
     private Integer generateNewId(List<Specialty> specialties) {
@@ -22,7 +22,7 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
 
     @Override
     public Specialty getById(Integer id) {
-        return this.service.getItemsFromFile(Specialty.class).stream()
+        return this.repositoryService.getItemsFromFile(Specialty.class).stream()
             .filter(s -> s.getId().equals(id))
             .findFirst()
             .orElse(null);
@@ -30,36 +30,36 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
 
     @Override
     public List<Specialty> getAll() {
-        return this.service.getItemsFromFile(Specialty.class);
+        return this.repositoryService.getItemsFromFile(Specialty.class);
     }
 
     @Override
     public Specialty save(Specialty specialtyToSave) {
-        List<Specialty> currentSpecialties = this.service.getItemsFromFile(Specialty.class);
+        List<Specialty> currentSpecialties = this.repositoryService.getItemsFromFile(Specialty.class);
 
         Integer id = generateNewId(currentSpecialties);
         specialtyToSave.setId(id);
         currentSpecialties.add(specialtyToSave);
 
-        this.service.addItemsToFile(currentSpecialties);
+        this.repositoryService.addItemsToFile(currentSpecialties);
         return specialtyToSave;
     }
 
     @Override
     public Specialty update(Specialty specialty) {
-        List<Specialty> currentSpecialties = this.service.getItemsFromFile(Specialty.class);
+        List<Specialty> currentSpecialties = this.repositoryService.getItemsFromFile(Specialty.class);
 
         currentSpecialties = currentSpecialties.stream()
             .map(s -> Objects.equals(s.getId(), specialty.getId()) ? specialty : s)
             .collect(Collectors.toList());
 
-        this.service.addItemsToFile(currentSpecialties);
+        this.repositoryService.addItemsToFile(currentSpecialties);
         return specialty;
     }
 
     @Override
     public void deleteById(Integer id) {
-        List<Specialty> currentSpecialties = this.service.getItemsFromFile(Specialty.class);
+        List<Specialty> currentSpecialties = this.repositoryService.getItemsFromFile(Specialty.class);
 
         currentSpecialties = currentSpecialties.stream()
             .peek(s -> {
@@ -69,6 +69,6 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
             })
             .collect(Collectors.toList());
 
-        this.service.addItemsToFile(currentSpecialties);
+        this.repositoryService.addItemsToFile(currentSpecialties);
     }
 }

@@ -10,10 +10,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class GsonSkillRepositoryImpl implements SkillRepository {
-    private final RepositoryService<Skill> service;
+    private final RepositoryService<Skill> repositoryService;
 
     public GsonSkillRepositoryImpl() {
-        this.service = new RepositoryService<>("src/main/resources/skills.json");
+        this.repositoryService = new RepositoryService<>("src/main/resources/skills.json");
     }
 
     private Integer generateNewId(List<Skill> skills) {
@@ -23,7 +23,7 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public Skill getById(Integer id) {
-        return this.service.getItemsFromFile(Skill.class).stream()
+        return this.repositoryService.getItemsFromFile(Skill.class).stream()
             .filter(s -> s.getId().equals(id))
             .findFirst()
             .orElse(null);
@@ -31,22 +31,22 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
 
     @Override
     public List<Skill> getAll() {
-        return this.service.getItemsFromFile(Skill.class);
+        return this.repositoryService.getItemsFromFile(Skill.class);
     }
 
     @Override
     public Skill save(Skill skillToSave) {
-        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
+        List<Skill> currentSkills = this.repositoryService.getItemsFromFile(Skill.class);
         Integer id = generateNewId(currentSkills);
         skillToSave.setId(id);
         currentSkills.add(skillToSave);
-        this.service.addItemsToFile(currentSkills);
+        this.repositoryService.addItemsToFile(currentSkills);
         return skillToSave;
     }
 
     @Override
     public Skill update(Skill skill) {
-        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
+        List<Skill> currentSkills = this.repositoryService.getItemsFromFile(Skill.class);
         AtomicBoolean wasUpdated = new AtomicBoolean(false);
 
         currentSkills = currentSkills.stream()
@@ -59,13 +59,13 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
             })
             .collect(Collectors.toList());
 
-        this.service.addItemsToFile(currentSkills);
+        this.repositoryService.addItemsToFile(currentSkills);
         return wasUpdated.get() ? skill : null;
     }
 
     @Override
     public void deleteById(Integer id) {
-        List<Skill> currentSkills = this.service.getItemsFromFile(Skill.class);
+        List<Skill> currentSkills = this.repositoryService.getItemsFromFile(Skill.class);
 
         currentSkills = currentSkills.stream()
             .peek(s -> {
@@ -75,7 +75,7 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
             })
             .collect(Collectors.toList());
 
-        this.service.addItemsToFile(currentSkills);
+        this.repositoryService.addItemsToFile(currentSkills);
     }
 }
 

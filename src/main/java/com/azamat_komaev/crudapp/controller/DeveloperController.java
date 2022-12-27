@@ -10,24 +10,18 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class DeveloperController {
-    private final DeveloperRepository repository;
+    private final DeveloperRepository developerRepository;
 
     public DeveloperController() {
-        this.repository = new GsonDeveloperRepositoryImpl();
+        this.developerRepository = new GsonDeveloperRepositoryImpl();
     }
 
     public List<Developer> getAll() {
-        return this.repository.getAll();
+        return this.developerRepository.getAll();
     }
 
-    public Developer getOne(Integer id) throws NoSuchElementException {
-        Developer developer = this.repository.getById(id);
-
-        if (developer == null) {
-            throw new NoSuchElementException("There is no such element in database!");
-        }
-
-        return developer;
+    public Developer getOne(Integer id) {
+        return this.developerRepository.getById(id);
     }
 
     public Developer save(String firstName, String lastName,
@@ -39,24 +33,27 @@ public class DeveloperController {
         developerToSave.setSkills(skillList);
         developerToSave.setSpecialty(specialty);
 
-        return this.repository.save(developerToSave);
+        return this.developerRepository.save(developerToSave);
     }
 
     public Developer update(Integer id, String firstName, String lastName,
-                            List<Skill> skillList, Specialty specialty) throws NoSuchElementException {
-        Developer developerToUpdate = getOne(id);
+                            List<Skill> skillList, Specialty specialty) {
+        Developer developerToUpdate = this.developerRepository.getById(id);
+
+        if (developerToUpdate == null) {
+            return null;
+        }
 
         developerToUpdate.setFirstName(firstName);
         developerToUpdate.setLastName(lastName);
         developerToUpdate.setSkills(skillList);
         developerToUpdate.setSpecialty(specialty);
 
-        return this.repository.update(developerToUpdate);
+        return this.developerRepository.update(developerToUpdate);
     }
 
-    public void destroy(Integer id) throws NoSuchElementException {
-        getOne(id);
-        this.repository.deleteById(id);
+    public void destroy(Integer id) {
+        this.developerRepository.deleteById(id);
     }
 }
 

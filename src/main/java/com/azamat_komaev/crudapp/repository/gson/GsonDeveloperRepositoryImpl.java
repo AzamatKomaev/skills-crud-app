@@ -9,10 +9,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
-    private final RepositoryService<Developer> service;
+    private final RepositoryService<Developer> repositoryService;
 
     public GsonDeveloperRepositoryImpl() {
-        this.service = new RepositoryService<>("src/main/resources/developers.json");
+        this.repositoryService = new RepositoryService<>("src/main/resources/developers.json");
     }
 
     private Integer generateNewId(List<Developer> developers) {
@@ -22,7 +22,7 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public Developer getById(Integer id) {
-        return this.service.getItemsFromFile(Developer.class).stream()
+        return this.repositoryService.getItemsFromFile(Developer.class).stream()
             .filter(s -> s.getId().equals(id))
             .findFirst()
             .orElse(null);
@@ -30,36 +30,36 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
 
     @Override
     public List<Developer> getAll() {
-        return this.service.getItemsFromFile(Developer.class);
+        return this.repositoryService.getItemsFromFile(Developer.class);
     }
 
     @Override
     public Developer save(Developer developerToSave) {
-        List<Developer> currentDevelopers = this.service.getItemsFromFile(Developer.class);
+        List<Developer> currentDevelopers = this.repositoryService.getItemsFromFile(Developer.class);
 
         Integer id = generateNewId(currentDevelopers);
         developerToSave.setId(id);
         currentDevelopers.add(developerToSave);
 
-        this.service.addItemsToFile(currentDevelopers);
+        this.repositoryService.addItemsToFile(currentDevelopers);
         return developerToSave;
     }
 
     @Override
     public Developer update(Developer developer) {
-        List<Developer> currentDevelopers = this.service.getItemsFromFile(Developer.class);
+        List<Developer> currentDevelopers = this.repositoryService.getItemsFromFile(Developer.class);
 
         currentDevelopers = currentDevelopers.stream()
             .map(d -> Objects.equals(d.getId(), developer.getId()) ? developer : d)
             .collect(Collectors.toList());
 
-        this.service.addItemsToFile(currentDevelopers);
+        this.repositoryService.addItemsToFile(currentDevelopers);
         return developer;
     }
 
     @Override
     public void deleteById(Integer id) {
-        List<Developer> currentDevelopers = this.service.getItemsFromFile(Developer.class);
+        List<Developer> currentDevelopers = this.repositoryService.getItemsFromFile(Developer.class);
 
         currentDevelopers = currentDevelopers.stream()
             .peek(d -> {
@@ -69,6 +69,6 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
             })
             .collect(Collectors.toList());
 
-        this.service.addItemsToFile(currentDevelopers);
+        this.repositoryService.addItemsToFile(currentDevelopers);
     }
 }

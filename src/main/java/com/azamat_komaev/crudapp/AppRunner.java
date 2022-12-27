@@ -7,7 +7,7 @@ public class AppRunner {
     public static void main(String[] args) {
         System.out.println("""
             Hello! It is console application to work with different entities.\s
-            If you want to get full information about it you can read README.md.\s
+            If you want to get full information about how to use it you can read README.md.\s
             """);
 
         while (true) {
