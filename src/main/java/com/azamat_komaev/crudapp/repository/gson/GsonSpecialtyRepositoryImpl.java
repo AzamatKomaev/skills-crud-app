@@ -6,6 +6,7 @@ import com.azamat_komaev.crudapp.repository.SpecialtyRepository;
 import com.azamat_komaev.crudapp.service.RepositoryService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
@@ -48,13 +49,20 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
     @Override
     public Specialty update(Specialty specialty) {
         List<Specialty> currentSpecialties = this.repositoryService.getItemsFromFile(Specialty.class);
+        AtomicBoolean wasUpdated = new AtomicBoolean(false);
 
         currentSpecialties = currentSpecialties.stream()
-            .map(s -> Objects.equals(s.getId(), specialty.getId()) ? specialty : s)
+            .map(s -> {
+                if (Objects.equals(s.getId(), specialty.getId())) {
+                    wasUpdated.set(true);
+                    return specialty;
+                }
+                return s;
+            })
             .collect(Collectors.toList());
 
         this.repositoryService.addItemsToFile(currentSpecialties);
-        return specialty;
+        return wasUpdated.get() ? specialty : null;
     }
 
     @Override

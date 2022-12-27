@@ -1,17 +1,12 @@
 [
     {
         "id": 1,
-        "firstName": "Azamat",
-        "lastName": "Komaev",
+        "firstName": "David",
+        "lastName": "Guetta",
         "skills": [
             {
-                "id": 2,
-                "name": "No-Code",
-                "status": "ACTIVE"
-            },
-            {
-                "id": 4,
-                "name": "Hard-Skills",
+                "id": 3,
+                "name": "Manage-people",
                 "status": "ACTIVE"
             }
         ],
@@ -24,23 +19,23 @@
     },
     {
         "id": 2,
-        "firstName": "Vladimir",
-        "lastName": "Putin",
+        "firstName": "Azamat",
+        "lastName": "Komaev",
         "skills": [
             {
-                "id": 2,
-                "name": "No-Code",
+                "id": 1,
+                "name": "Hard-Skills",
                 "status": "ACTIVE"
             },
             {
-                "id": 4,
-                "name": "Hard-Skills",
+                "id": 2,
+                "name": "Soft-Skills",
                 "status": "ACTIVE"
             }
         ],
         "specialty": {
-            "id": 2,
-            "name": "Manager",
+            "id": 1,
+            "name": "Programmer",
             "status": "ACTIVE"
         },
         "status": "ACTIVE"

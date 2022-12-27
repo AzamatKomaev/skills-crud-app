@@ -1,22 +1,17 @@
 [
     {
         "id": 1,
-        "name": "Manager",
-        "status": "DELETED"
+        "name": "Hard-Skills",
+        "status": "ACTIVE"
     },
     {
         "id": 2,
-        "name": "No-Code",
+        "name": "Soft-Skills",
         "status": "ACTIVE"
     },
     {
         "id": 3,
-        "name": "Programming",
-        "status": "ACTIVE"
-    },
-    {
-        "id": 4,
-        "name": "Hard-Skills",
+        "name": "Manage-people",
         "status": "ACTIVE"
     }
 ]

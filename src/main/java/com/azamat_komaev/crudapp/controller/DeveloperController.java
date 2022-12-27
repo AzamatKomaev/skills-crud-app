@@ -7,7 +7,6 @@ import com.azamat_komaev.crudapp.repository.DeveloperRepository;
 import com.azamat_komaev.crudapp.repository.gson.GsonDeveloperRepositoryImpl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class DeveloperController {
     private final DeveloperRepository developerRepository;
@@ -26,13 +25,7 @@ public class DeveloperController {
 
     public Developer save(String firstName, String lastName,
                           List<Skill> skillList, Specialty specialty) {
-        Developer developerToSave = new Developer();
-
-        developerToSave.setFirstName(firstName);
-        developerToSave.setLastName(lastName);
-        developerToSave.setSkills(skillList);
-        developerToSave.setSpecialty(specialty);
-
+        Developer developerToSave = new Developer(null, firstName, lastName, skillList, specialty);
         return this.developerRepository.save(developerToSave);
     }
 
@@ -44,11 +37,7 @@ public class DeveloperController {
             return null;
         }
 
-        developerToUpdate.setFirstName(firstName);
-        developerToUpdate.setLastName(lastName);
-        developerToUpdate.setSkills(skillList);
-        developerToUpdate.setSpecialty(specialty);
-
+        developerToUpdate = new Developer(id, firstName, lastName, skillList, specialty);
         return this.developerRepository.update(developerToUpdate);
     }
 

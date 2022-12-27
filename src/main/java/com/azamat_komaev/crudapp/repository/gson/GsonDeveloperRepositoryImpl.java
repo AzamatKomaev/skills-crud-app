@@ -6,6 +6,7 @@ import com.azamat_komaev.crudapp.repository.DeveloperRepository;
 import com.azamat_komaev.crudapp.service.RepositoryService;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
@@ -48,13 +49,20 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public Developer update(Developer developer) {
         List<Developer> currentDevelopers = this.repositoryService.getItemsFromFile(Developer.class);
+        AtomicBoolean wasUpdated = new AtomicBoolean(false);
 
         currentDevelopers = currentDevelopers.stream()
-            .map(d -> Objects.equals(d.getId(), developer.getId()) ? developer : d)
+            .map(d -> {
+                if (Objects.equals(d.getId(), developer.getId())){
+                    wasUpdated.set(true);
+                    return developer;
+                }
+                return d;
+            })
             .collect(Collectors.toList());
 
         this.repositoryService.addItemsToFile(currentDevelopers);
-        return developer;
+        return wasUpdated.get() ? developer : null;
     }
 
     @Override

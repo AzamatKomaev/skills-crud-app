@@ -5,44 +5,40 @@ import com.azamat_komaev.crudapp.repository.SpecialtyRepository;
 import com.azamat_komaev.crudapp.repository.gson.GsonSpecialtyRepositoryImpl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class SpecialtyController {
-    private final SpecialtyRepository repository;
+    private final SpecialtyRepository specialtyRepository;
 
     public SpecialtyController() {
-        this.repository = new GsonSpecialtyRepositoryImpl();
+        this.specialtyRepository = new GsonSpecialtyRepositoryImpl();
     }
 
     public List<Specialty> getAll() {
-        return this.repository.getAll();
+        return this.specialtyRepository.getAll();
     }
 
-    public Specialty getOne(Integer id) throws NoSuchElementException {
-        Specialty specialty = this.repository.getById(id);
+    public Specialty getOne(Integer id) {
+        return this.specialtyRepository.getById(id);
+    }
 
-        if (specialty == null) {
-            throw new NoSuchElementException("There is no such element in database!");
+    public Specialty save(String name) {
+        Specialty specialtyToSave = new Specialty(null, name);
+        return this.specialtyRepository.save(specialtyToSave);
+    }
+
+    public Specialty update(Integer id, String name) {
+        Specialty specialtyToUpdate = getOne(id);
+
+        if (specialtyToUpdate == null) {
+            return null;
         }
 
-        return specialty;
+        specialtyToUpdate = new Specialty(id, name);
+        return this.specialtyRepository.update(specialtyToUpdate);
     }
 
-    public Specialty save(String name) throws NoSuchElementException {
-        Specialty specialtyToSave = new Specialty();
-        specialtyToSave.setName(name);
-        return this.repository.save(specialtyToSave);
-    }
-
-    public Specialty update(Integer id, String name) throws NoSuchElementException {
-        Specialty specialtyToUpdate = getOne(id);
-        specialtyToUpdate.setName(name);
-        return this.repository.update(specialtyToUpdate);
-    }
-
-    public void destroy(Integer id) throws NoSuchElementException {
-        getOne(id);
-        this.repository.deleteById(id);
+    public void destroy(Integer id) {
+        this.specialtyRepository.deleteById(id);
     }
 }
 

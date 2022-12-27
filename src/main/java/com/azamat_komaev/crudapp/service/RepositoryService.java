@@ -19,19 +19,19 @@ public class RepositoryService<T> {
 
     public List<T> getItemsFromFile(Class<T> modelType) {
         String fileContent;
-        List<T> elementsList;
-        List<T> defaultList = new ArrayList<>(Collections.emptyList());
+        List<T> modelList;
+        List<T> emptyList = new ArrayList<>(Collections.emptyList());
 
         try {
             fileContent = new String(Files.readAllBytes(Paths.get(this.FILE_PATH)));
             Type type = TypeToken.getParameterized(List.class, modelType).getType();
-            elementsList = GSON.fromJson(fileContent, type);
+            modelList = GSON.fromJson(fileContent, type);
         } catch (IOException e) {
             e.printStackTrace();
-            return defaultList;
+            return emptyList;
         }
 
-        return elementsList == null ? defaultList : elementsList;
+        return modelList != null ? modelList : emptyList;
     }
 
     public void addItemsToFile(List<T> elements) {

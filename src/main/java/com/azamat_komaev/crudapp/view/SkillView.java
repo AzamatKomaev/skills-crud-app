@@ -7,51 +7,57 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class SkillView implements GenericView {
-    private final SkillController controller;
+    private final SkillController skillController;
     private final Scanner scanner;
 
     public SkillView() {
-        this.controller = new SkillController();
+        this.skillController = new SkillController();
         this.scanner = new Scanner(System.in);
     }
 
+    private Integer readAndParseId() {
+        System.out.print("Enter id: ");
+        return Integer.parseInt(this.scanner.nextLine());
+    }
+
+    private String readAndParseName() {
+        System.out.print("Enter name: ");
+        return scanner.nextLine();
+    }
+
     public void printAll() {
-        System.out.println(this.controller.getAll());
+        System.out.println(this.skillController.getAll());
     }
 
     public void printOne() {
-        System.out.print("Enter skill id should be gotten: ");
-        Integer id = Integer.parseInt(this.scanner.nextLine());
-        Skill skillToPrint;
+        Integer id = readAndParseId();
+        Skill skillToPrint = this.skillController.getOne(id);
 
-        try {
-            skillToPrint = this.controller.getOne(id);
-            System.out.println(skillToPrint);
-        } catch (NoSuchElementException e) {
+        if (skillToPrint == null) {
             System.out.println("There is no any skill with such id!");
+            return;
         }
 
+        System.out.println(skillToPrint);
     }
 
     public void saveAndPrint() {
-        System.out.print("Enter name for new skill: ");
-        String name = this.scanner.nextLine();
-        Skill newSkill = this.controller.save(name);
+        String name = readAndParseName();
+        Skill newSkill = this.skillController.save(name);
         System.out.println(newSkill);
     }
 
     public void updateAndPrint() {
-        System.out.print("Enter skill id should be updated: ");
-        Integer id = Integer.parseInt(this.scanner.nextLine());
-        System.out.print("Enter new name for skill you want to update: ");
-        String name = this.scanner.nextLine();
+        Integer id = readAndParseId();
+        String name = readAndParseName();
+        Skill skillToPrint = this.skillController.update(id, name);
 
-        try {
-            Skill skillToPrint = this.controller.update(id, name);
-            System.out.println(skillToPrint);
-        } catch (NoSuchElementException e) {
+        if (skillToPrint == null) {
             System.out.println("There is no any skill with such id!");
+            return;
         }
+
+        System.out.println(skillToPrint);
     }
 
     public void deleteAndPrintWasOperationSuccessful() {
@@ -59,7 +65,7 @@ public class SkillView implements GenericView {
         Integer id = Integer.parseInt(this.scanner.nextLine());
 
         try {
-            this.controller.destroy(id);
+            this.skillController.destroy(id);
             System.out.println("The skill was deleted successful!");
         } catch (NoSuchElementException e) {
             System.out.println("There is no any skill with such id!");
