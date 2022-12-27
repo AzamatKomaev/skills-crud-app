@@ -5,7 +5,6 @@ import com.azamat_komaev.crudapp.model.Skill;
 import com.azamat_komaev.crudapp.model.Specialty;
 import com.azamat_komaev.crudapp.repository.DeveloperRepository;
 import com.azamat_komaev.crudapp.repository.gson.GsonDeveloperRepositoryImpl;
-import com.azamat_komaev.crudapp.util.DeveloperControllerUtil;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,8 +34,10 @@ public class DeveloperController {
                           List<Skill> skillList, Specialty specialty) {
         Developer developerToSave = new Developer();
 
-        DeveloperControllerUtil.setDeveloperModelFields(developerToSave, firstName,
-                                                        lastName, skillList, specialty);
+        developerToSave.setFirstName(firstName);
+        developerToSave.setLastName(lastName);
+        developerToSave.setSkills(skillList);
+        developerToSave.setSpecialty(specialty);
 
         return this.repository.save(developerToSave);
     }
@@ -45,8 +46,10 @@ public class DeveloperController {
                             List<Skill> skillList, Specialty specialty) throws NoSuchElementException {
         Developer developerToUpdate = getOne(id);
 
-        DeveloperControllerUtil.setDeveloperModelFields(developerToUpdate, firstName,
-                                                        lastName, skillList, specialty);
+        developerToUpdate.setFirstName(firstName);
+        developerToUpdate.setLastName(lastName);
+        developerToUpdate.setSkills(skillList);
+        developerToUpdate.setSpecialty(specialty);
 
         return this.repository.update(developerToUpdate);
     }
