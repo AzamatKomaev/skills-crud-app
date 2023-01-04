@@ -49,8 +49,8 @@ public class GsonDeveloperRepositoryImpl implements DeveloperRepository {
     @Override
     public Developer update(Developer developer) {
         List<Developer> currentDevelopers = this.repositoryService.getItemsFromFile(Developer.class);
-        AtomicBoolean wasUpdated = new AtomicBoolean(false);
 
+        AtomicBoolean wasUpdated = new AtomicBoolean(false);
         currentDevelopers = currentDevelopers.stream()
             .map(d -> {
                 if (Objects.equals(d.getId(), developer.getId())){

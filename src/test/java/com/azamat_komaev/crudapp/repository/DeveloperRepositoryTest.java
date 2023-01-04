@@ -90,7 +90,7 @@ public class DeveloperRepositoryTest {
         Developer developerAfterUpdate;
         Developer developerToUpdate = new Developer();
 
-        List<Skill> developerSkillListToUpdate = new ArrayList<Skill>();
+        List<Skill> developerSkillListToUpdate = new ArrayList<>();
         developerSkillListToUpdate.add(new Skill(1, "Coding"));
 
         Specialty developerSpecialtyToUpdate = new Specialty(1, "HR");

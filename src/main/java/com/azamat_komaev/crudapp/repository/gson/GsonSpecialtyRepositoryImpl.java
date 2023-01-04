@@ -49,8 +49,8 @@ public class GsonSpecialtyRepositoryImpl implements SpecialtyRepository {
     @Override
     public Specialty update(Specialty specialty) {
         List<Specialty> currentSpecialties = this.repositoryService.getItemsFromFile(Specialty.class);
-        AtomicBoolean wasUpdated = new AtomicBoolean(false);
 
+        AtomicBoolean wasUpdated = new AtomicBoolean(false);
         currentSpecialties = currentSpecialties.stream()
             .map(s -> {
                 if (Objects.equals(s.getId(), specialty.getId())) {

@@ -37,9 +37,11 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
     @Override
     public Skill save(Skill skillToSave) {
         List<Skill> currentSkills = this.repositoryService.getItemsFromFile(Skill.class);
+
         Integer id = generateNewId(currentSkills);
         skillToSave.setId(id);
         currentSkills.add(skillToSave);
+
         this.repositoryService.addItemsToFile(currentSkills);
         return skillToSave;
     }
@@ -47,8 +49,8 @@ public class GsonSkillRepositoryImpl implements SkillRepository {
     @Override
     public Skill update(Skill skill) {
         List<Skill> currentSkills = this.repositoryService.getItemsFromFile(Skill.class);
-        AtomicBoolean wasUpdated = new AtomicBoolean(false);
 
+        AtomicBoolean wasUpdated = new AtomicBoolean(false);
         currentSkills = currentSkills.stream()
             .map(s -> {
                 if (Objects.equals(s.getId(), skill.getId())) {

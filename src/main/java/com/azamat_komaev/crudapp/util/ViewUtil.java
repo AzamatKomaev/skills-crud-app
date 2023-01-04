@@ -14,8 +14,8 @@ public class ViewUtil {
         return scanner.nextLine();
     }
 
-    public static String[] splitInputOnEntityNameAndCommand(String input) {
-        return input.split("/");
+    public static String[] splitInputOnEntityNameAndCommand(String input, String splitter) {
+        return input.split(splitter);
     }
 
     public static GenericView getViewModelByEntityName(String entityName) {

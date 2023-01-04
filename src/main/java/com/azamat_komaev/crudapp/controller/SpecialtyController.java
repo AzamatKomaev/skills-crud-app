@@ -27,7 +27,7 @@ public class SpecialtyController {
     }
 
     public Specialty update(Integer id, String name) {
-        Specialty specialtyToUpdate = getOne(id);
+        Specialty specialtyToUpdate = this.specialtyRepository.getById(id);
 
         if (specialtyToUpdate == null) {
             return null;

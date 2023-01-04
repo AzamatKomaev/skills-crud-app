@@ -12,7 +12,7 @@ public class AppRunner {
 
         while (true) {
             String input = ViewUtil.askForAction();
-            String[] inputParts = ViewUtil.splitInputOnEntityNameAndCommand(input);
+            String[] inputParts = ViewUtil.splitInputOnEntityNameAndCommand(input, "/");
 
             String entityName = inputParts[0];
             String command = inputParts[1];
